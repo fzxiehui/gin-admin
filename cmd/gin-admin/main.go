@@ -6,7 +6,8 @@ Swagger Reference: https://github.com/swaggo/swag#declarative-comments-format
 Usage：
 
 	go get -u github.com/swaggo/swag/cmd/swag
-	swag init --generalInfo ./cmd/gin-admin/main.go --output ./internal/app/swagger */
+	swag init --generalInfo ./cmd/gin-admin/main.go --output ./internal/app/swagger
+*/
 package main
 
 import (
@@ -33,6 +34,10 @@ var VERSION = "8.1.0"
 // @contact.name LyricTian
 // @contact.email tiannianshou@gmail.com
 func main() {
+
+	// 创建日志上下文
+	// Background 生成最顶层的 Context，
+	// 它没有父 Context，也没有任何键值对。
 	ctx := logger.NewTagContext(context.Background(), "__main__")
 
 	app := cli.NewApp()
