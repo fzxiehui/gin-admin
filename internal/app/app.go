@@ -66,6 +66,7 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 		opt(&o)
 	}
 
+	// 读取cli参数
 	config.MustLoad(o.ConfigFile)
 	if v := o.ModelFile; v != "" {
 		config.C.Casbin.Model = v
@@ -80,15 +81,19 @@ func Init(ctx context.Context, opts ...Option) (func(), error) {
 
 	logger.WithContext(ctx).Printf("Start server,#run_mode %s,#version %s,#pid %d", config.C.RunMode, o.Version, os.Getpid())
 
+	// 初始化日志
 	loggerCleanFunc, err := InitLogger()
 	if err != nil {
 		return nil, err
 	}
 
+	// 初始化监控
 	monitorCleanFunc := InitMonitor(ctx)
 
+	// 初始化认证码
 	InitCaptcha()
 
+	// 构建注入器
 	injector, injectorCleanFunc, err := BuildInjector()
 	if err != nil {
 		return nil, err

@@ -45,6 +45,7 @@ func main() {
 	app.Version = VERSION
 	app.Usage = "RBAC scaffolding based on GIN + GORM + CASBIN + WIRE."
 	app.Commands = []*cli.Command{
+		// web
 		newWebCmd(ctx),
 	}
 	err := app.Run(os.Args)
@@ -58,6 +59,7 @@ func newWebCmd(ctx context.Context) *cli.Command {
 		Name:  "web",
 		Usage: "Run http server",
 		Flags: []cli.Flag{
+			// 配置文件路径
 			&cli.StringFlag{
 				Name:     "conf",
 				Aliases:  []string{"c"},
